@@ -118,90 +118,44 @@ namespace Inheritance.Geometry.Virtual
             return Parts.Any(body => body.ContainsPoint(point));
         }
 
-        //public override RectangularCuboid GetBoundingBox()
-        //{
-        //    var cMin = Position;
-        //    var cMax = Position;
-
-        //    var figure = Parts[0].GetBoundingBox();
-
-        //    double maxX = figure.Position.X + figure.SizeX / 2;
-        //    double maxY = figure.Position.Y + figure.SizeY / 2;
-        //    double maxZ = figure.Position.Z + figure.SizeZ / 2;
-
-        //    double minX = figure.Position.X - figure.SizeX / 2;
-        //    double minY = figure.Position.Y - figure.SizeY / 2;
-        //    double minZ = figure.Position.Z - figure.SizeZ / 2;
-
-        //    for (int i = 1; i < Parts.Count; i++)
-        //    {
-        //        figure = Parts[i].GetBoundingBox();
-        //        double curMaxX = figure.Position.X + figure.SizeX / 2;
-        //        double curMaxY = figure.Position.Y + figure.SizeY / 2;
-        //        double curMaxZ = figure.Position.Z + figure.SizeZ / 2;
-
-        //        double curMinX = figure.Position.X - figure.SizeX / 2;
-        //        double curMinY = figure.Position.Y - figure.SizeY / 2;
-        //        double curMinZ = figure.Position.Z - figure.SizeZ / 2;
-
-
-        //        maxX = (curMaxX > maxX) ? curMaxX : maxX;
-        //        minX = (curMinX < minX) ? curMinX : minX;
-
-        //        maxY = (curMaxY > maxY) ? curMaxY : maxY;
-        //        minY = (curMinY < minY) ? curMinY : minY;
-
-        //        maxZ = (curMaxZ > maxZ) ? curMaxZ : maxZ;
-        //        minZ = (curMinZ < minZ) ? curMinZ : minZ;
-        //    }
-
-        //    Vector3 center = new Vector3(2 / 2, 2 / 2, 2 / 2);
-
-        //    return new RectangularCuboid(center, 2, 2, 2);
-        //}
-
         public override RectangularCuboid GetBoundingBox()
         {
-            var cMin = Position;
-            var cMax = Position;
+            var posMin = Position;
+            var posMax = Position;
 
-            for (var i = 0; i < Parts.Count; i++)
+            for (int i = 0; i < Parts.Count; i++)
             {
-                var cube = Parts[i].GetBoundingBox();
-                var minPoint = GetExtremum(cube, -1);
-                var maxPoint = GetExtremum(cube, 1);
+                var figure = Parts[i].GetBoundingBox();
 
-                cMin = SetMinimum(minPoint, cMin);
-                cMax = SetMaximum(maxPoint, cMax);
+                var vectorMax = new Vector3(
+                    figure.Position.X + figure.SizeX / 2,
+                    figure.Position.Y + figure.SizeY / 2,
+                    figure.Position.Z + figure.SizeZ / 2
+                );
+
+                var vectorMin = new Vector3(
+                    figure.Position.X - figure.SizeX / 2,
+                    figure.Position.Y - figure.SizeY / 2,
+                    figure.Position.Z - figure.SizeZ / 2
+                );
+
+
+                posMin = new Vector3(
+                    (vectorMin.X < posMin.X) ? vectorMin.X : posMin.X,
+                    (vectorMin.Y < posMin.Y) ? vectorMin.Y : posMin.Y,
+                    (vectorMin.Z < posMin.Z) ? vectorMin.Z : posMin.Z
+                );
+
+                posMax = new Vector3(
+                    (vectorMax.X > posMax.X) ? vectorMax.X : posMax.X,
+                    (vectorMax.Y > posMax.Y) ? vectorMax.Y : posMax.Y,
+                    (vectorMax.Z > posMax.Z) ? vectorMax.Z : posMax.Z
+                );
             }
 
-            var resultVector = cMax - cMin;
-            var currentPosition = new Vector3((cMin.X + cMax.X) / 2, (cMin.Y + cMax.Y) / 2, (cMin.Z + cMax.Z) / 2);
+            var resultVector = posMax - posMin;
+            var currentPosition = new Vector3((posMin.X + posMax.X) / 2, (posMin.Y + posMax.Y) / 2, (posMin.Z + posMax.Z) / 2);
             return new RectangularCuboid(currentPosition, resultVector.X, resultVector.Y, resultVector.Z);
-        }
-
-        private Vector3 SetMinimum(Vector3 cur, Vector3 min)
-        {
-            if (cur.X < min.X) min = new Vector3(cur.X, min.Y, min.Z);
-            if (cur.Y < min.Y) min = new Vector3(min.X, cur.Y, min.Z);
-            if (cur.Z < min.Z) min = new Vector3(min.X, min.Y, cur.Z);
-            return min;
-        }
-
-        private Vector3 SetMaximum(Vector3 cur, Vector3 max)
-        {
-            if (cur.X > max.X) max = new Vector3(cur.X, max.Y, max.Z);
-            if (cur.Y > max.Y) max = new Vector3(max.X, cur.Y, max.Z);
-            if (cur.Z > max.Z) max = new Vector3(max.X, max.Y, cur.Z);
-            return max;
-        }
-
-        private Vector3 GetExtremum(RectangularCuboid cube, int dir)
-        {
-            return new Vector3(
-                cube.Position.X + dir * cube.SizeX / 2,
-                cube.Position.Y + dir * cube.SizeY / 2,
-                cube.Position.Z + dir * cube.SizeZ / 2);
         }
     }
 }
