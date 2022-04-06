@@ -7,49 +7,110 @@ using System.Threading.Tasks;
 
 namespace Generics.BinaryTrees
 {
-    public class Leaf<T>
+    public class BinaryTree<T> : IEnumerable<T> where T : IComparable<T>
     {
-        private T Value { get; }
-        private bool Root;
 
-        public Leaf(T value, bool root)
+        public T Value { get; set; }
+        public BinaryTree<T> Right { get; set; }
+        public BinaryTree<T> Left { get; set; }
+        public bool Used = false;
+
+
+        public BinaryTree<T> LeafCheckAndCreate(BinaryTree<T> checkingLeaf)
         {
-            Value = value;
-            Root = root;
-        }
-
-        private Leaf<T> Right { get; set; }
-        private Leaf<T> Left { get; set; }
-
-        
-    }
-
-    public class BinaryTree<T> : IEnumerable<T>
-    {
-        private List<Leaf<T>> binaryTree;
-
-
-
-        public void AddLeaf(T value)
-        {
-            if(binaryTree.Count == 0)
+            if(checkingLeaf != null)
             {
-                binaryTree.Add(new Leaf<T>(value, true));
+                return checkingLeaf;
             }
             else
             {
-                binaryTree.Add(new Leaf<T>(value, false));
+                return new BinaryTree<T>();
             }
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public void Add(T value)
         {
-            return new BinaryTree<T>();
+            if(!Used)
+            {
+                Value = value;
+                Used = true;
+                return;
+            }
+            else
+            {                
+                if(value.CompareTo(Value) <= 0)
+                {
+                    Left = LeafCheckAndCreate(Left);
+                    Add(value, Left);        
+                }
+                else
+                {
+                    Right = LeafCheckAndCreate(Right);
+                    Add(value, Right);
+                }
+            }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        public void Add(T value, BinaryTree<T> current)
         {
-            return GetEnumerator();
+            if (!current.Used)
+            {
+                current.Value = value;
+                current.Used = true;
+                return;
+            }
+            else
+            {
+                if (value.CompareTo(current.Value) <= 0)
+                {
+                    current.Left = LeafCheckAndCreate(current.Left);
+                    Add(value, current.Left);
+                }
+                else
+                {
+                    current.Right = LeafCheckAndCreate(current.Right);
+                    Add(value, current.Right);
+                }
+            }
         }
+
+        public IEnumerator<T> GetEnumerator() => EnumeratorGetElements(this);
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        IEnumerator<T> EnumeratorGetElements(BinaryTree<T> leaf)
+        {
+            if (!Used || leaf == null)
+            {
+                yield break;
+            }
+            else
+            {
+                var enumeratorLeafLeft = EnumeratorGetElements(leaf.Left);
+                while(enumeratorLeafLeft.MoveNext())
+                    yield return enumeratorLeafLeft.Current;
+
+                yield return leaf.Value;
+
+                var enumeratorLeafRight = EnumeratorGetElements(leaf.Right);
+                while (enumeratorLeafRight.MoveNext())
+                    yield return enumeratorLeafRight.Current;
+
+            }
+        }
+    }
+
+    public class BinaryTree
+    {
+        
+        public static BinaryTree<int> Create(params int[] values)
+        {
+            BinaryTree<int> binaryTree = new BinaryTree<int>();
+
+            foreach(var value in values)
+                binaryTree.Add(value);
+
+            return binaryTree;
+        }       
     }
 }
