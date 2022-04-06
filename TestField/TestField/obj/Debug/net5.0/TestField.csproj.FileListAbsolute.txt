@@ -1,0 +1,16 @@
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\bin\Debug\net5.0\TestField.exe
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\bin\Debug\net5.0\TestField.deps.json
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\bin\Debug\net5.0\TestField.runtimeconfig.json
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\bin\Debug\net5.0\TestField.runtimeconfig.dev.json
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\bin\Debug\net5.0\TestField.dll
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\bin\Debug\net5.0\TestField.pdb
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\obj\Debug\net5.0\TestField.csproj.AssemblyReference.cache
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\obj\Debug\net5.0\TestField.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\obj\Debug\net5.0\TestField.AssemblyInfoInputs.cache
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\obj\Debug\net5.0\TestField.AssemblyInfo.cs
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\obj\Debug\net5.0\TestField.csproj.CoreCompileInputs.cache
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\obj\Debug\net5.0\TestField.dll
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\obj\Debug\net5.0\refint\TestField.dll
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\obj\Debug\net5.0\TestField.pdb
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\obj\Debug\net5.0\TestField.genruntimeconfig.cache
+C:\Users\f.suharev\UlearnSharp\TestField\TestField\obj\Debug\net5.0\ref\TestField.dll

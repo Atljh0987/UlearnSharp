@@ -194,14 +194,14 @@ namespace Inheritance.Geometry.Virtual
         }
 
         [TestCase(0, 0, 0, 1)]
-        //[TestCase(0, 0, 0, 6)]
-        //[TestCase(0, 0, 0, 7)]
-        //[TestCase(1, 1, 1, 7)]
-        //[TestCase(2, 3, 6, 5)]
-        //[TestCase(-2, -3, 6, 3)]
-        //[TestCase(-12, -23, -46, 13)]
-        //[TestCase(12, -23, 6, 14)]
-        //[TestCase(8, 5, -16, 12)]
+        [TestCase(0, 0, 0, 6)]
+        [TestCase(0, 0, 0, 7)]
+        [TestCase(1, 1, 1, 7)]
+        [TestCase(2, 3, 6, 5)]
+        [TestCase(-2, -3, 6, 3)]
+        [TestCase(-12, -23, -46, 13)]
+        [TestCase(12, -23, 6, 14)]
+        [TestCase(8, 5, -16, 12)]
         public void CompoundBody_BoundingBox_IsCorrect(double x, double y, double z, double radius)
         {
             const int figuresCount = 6;
